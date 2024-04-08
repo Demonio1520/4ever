@@ -8,7 +8,7 @@ module.exports = {
     mode: 'development',
 
     output: {
-      path: __dirname + '/dist',
+      path: __dirname + '/docs',
       clean: true,
       filename: 'main.[fullhash].js'
     },
@@ -61,8 +61,12 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Webpack',
-            template: './src/index.html'
+            template: './src/index.html',
+            filename: 'index.html'
+        }),
+        new HtmlWebpackPlugin({
+          template: './src/options.html',
+          filename: 'options.html'
         }),
         new MiniCssExtractPlugin({
           filename: 'main.[fullhash].css',

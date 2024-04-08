@@ -23,12 +23,16 @@ html {
     box-sizing: inherit;
 }
 body {
-    background-color: white;
     font-size: 1.6rem;
+    height: 100vh;
+    margin: 0;
 }
 header {
     font-weight: bold;
     text-align: center;
+}
+main {
+    margin-top: 5rem;
 }
 img {
     max-width: 100%;
@@ -36,19 +40,23 @@ img {
 
 /* Site Header */
 
-.main {
+.header {
+    align-items: center;
     background-color: #490237;
+    border-bottom: 2px solid black;
     color: white;
+    display: flex;
     font-weight: bold;
     padding: 1rem 2rem;
     text-transform: uppercase;
 }
-.main p, main span {
-    margin-bottom: -.1rem;
+.header p {
+    margin: 0;
 }
 .xp {
     border: 2px solid black;
     height: 2rem;
+    margin-left: 1rem;
     width: 12rem;
 }
 .xp div {
@@ -56,8 +64,17 @@ img {
     height: 1.6rem;
     width: 0;
 }
+.options {
+    font-size: 2rem;
+    margin-left: auto;
+}
+.options:hover {
+    color: #dfdfdf
+}
 .version {
+    font-weight: bold;
     text-align: center;
+    text-transform: uppercase;
 }
 
 /* Flower - Site Main */
@@ -72,7 +89,7 @@ img {
     max-height: 0;
 }
 .flower {
-    height: 30rem;
+    padding-top: 15rem;
     width: 10rem;
 }
 .regadera {
@@ -120,6 +137,7 @@ img {
     font-size: 2rem;
     font-weight: bold;
     height: 15rem;
+    margin-top: 2rem;
     text-align: center;
 }
 .message p {
@@ -134,11 +152,12 @@ img {
 /* Site Section */
 
 .btn-regar button {
+    border: 2px solid black;
     font-size: 2rem;
     font-weight: bold;
     height: 5rem;
     text-transform: uppercase;
-    width: 12rem;
+    width: 33.3vw;
 }
 
 /* Site Footer */
@@ -152,9 +171,18 @@ img {
     justify-content: space-around;
 }
 .buttons button {
+    border: 2px solid black;
+    border-radius: 0;
     font-size: 2rem;
     font-weight: bold;
     height: 5rem;
     text-transform: uppercase;
-    width: 33.3%;
+    width: 33.3vw;
+}
+.buttons button:hover {
+    border: 2px solid black;
+}
+#btn-chest img {
+    max-height: 100%;
+    max-width: 100%;
 }

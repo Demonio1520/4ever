@@ -1,25 +1,32 @@
-import {Flower,Game,loadLevel,saveLevel,loadExp,saveExp,
+import {Flower,Game} from './js/class.js';
+import {loadLevel,saveLevel,loadExp,saveExp,
 loadText,saveText,loadTime, saveTime} from './js/functions.js';
 import './css/normalize.css';
 import './styles.css';
 
 // HTML Selectors - Let Variables - Const Variables
-export const divFlower = document.querySelector('.div-flower'),
+export const divVersion = document.querySelector('.version'),
+divFlower = document.querySelector('.div-flower'),
 divRegadera = document.querySelector('.div-regadera'),
 divDrops = document.querySelector('.div-drops'),
 divMessage = document.querySelector('.message'),
 divXp = document.querySelector('.xp'),
 timer = document.querySelectorAll('span')[1],
+btnOptions = document.querySelector('#options'),
 btnRegar = document.querySelector('#btn-regar');
 
-export let nText = loadText(), setTime = new Date(), today = loadTime(),
-month = new Date().getMonth(), year = new Date().getFullYear();
+export let nText = loadText(), version = '1.9', setTime = new Date(), today = loadTime(),
+background = 0, month = new Date().getMonth(), year = new Date().getFullYear();
 
 let level = loadLevel(), exp = loadExp();
-export const flower = new Flower(level), game = new Game();
+export const flower = new Flower(level), game = new Game(version,background);
+
+btnOptions.addEventListener('click',() => {
+    window.location.href = './options.html';
+});
 
 btnRegar.addEventListener('click',() => {
-    saveTime(today,month,year);
+    // saveTime(today,month,year);
     flower.water();
     exp = exp + game.newExp(level);
     saveExp(exp);
@@ -30,7 +37,7 @@ btnRegar.addEventListener('click',() => {
         setTimeout(() => {
             flower.flower(level);
             loadLevel();
-        }, 2500);
+        }, 5500);
     }
     setTimeout(() => {
         divMessage.innerHTML = '';

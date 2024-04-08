@@ -1,98 +1,6 @@
 // HTML Selectors - Let Variables - Const Variables
-import {divFlower,divRegadera,divDrops,divMessage,divXp,btnRegar,timer} from '../index.js';
-import {nText,setTime} from '../index.js';
-import {game} from '../index.js';
-
-export class Flower {
-    constructor(level) {
-        this.flower(level);
-    }
-    flower = (level) => {
-        const img = document.createElement('img');
-        img.src = `./assets/img/flower_grow_${level - 1}.png`;
-        img.alt = 'flor';
-        img.classList.add('flower');
-        divFlower.innerHTML = '';
-        divFlower.append(img);
-    }
-    water = () => {
-        this.wateringCan();
-        setTimeout(this.waterDrops,1000);
-
-        setTimeout(() => {
-            divDrops.innerHTML = "";
-            divRegadera.children[0].style.animation = "unrotate 1s ease-in-out forwards";
-            setTimeout(() => {
-                divRegadera.innerHTML = "";
-            },1200);
-
-            setTimeout(() => {
-                let i = 0;
-                const timer = setInterval(() => {
-                    this.glitters(i);
-                    i++;
-                    if (i == 4) clearInterval(timer);
-                },200);
-            },1500);
-
-            setTimeout(this.newText,2500,nText);
-        }, 2500);
-    }
-    wateringCan = () => {
-        const img = document.createElement('img');
-        img.src = './assets/img/regadera.png';
-        img.alt = 'Regadera';
-        img.classList.add('regadera');
-        divRegadera.append(img);
-    }
-    waterDrops = () => {
-        const img = document.createElement('img');
-        img.src = './assets/img/drops.gif';
-        img.alt = 'Gotas';
-        img.classList.add('drops');
-        divDrops.append(img);
-    }
-    glitters = (i) => {
-        const img = document.createElement('img');
-        img.src = './assets/img/brillos.png';
-        img.alt = 'Brillos';
-        img.classList.add(`glitters-${i}`);
-        divDrops.append(img);
-        setTimeout(() => {
-            divDrops.removeChild(img);
-        },400);
-    }
-    newText = (nText) => {
-        const p = document.createElement('p');
-        p.textContent = loadText(true);
-        divMessage.append(p);
-        divMessage.append(textImg());
-    }
-}
-
-export class Game {
-    newExp = (level) => {
-        let exp = 0;
-        switch (level) {
-            case 1:
-                exp = 4;
-            break;
-            case 2:
-                exp = 3;
-            break;
-            case 3:
-                exp = 2;
-            break;
-            case 4:
-                exp = 1;
-            break;
-            case 5:
-                exp = .5;
-            break;
-        }
-        return exp;
-    }
-}
+import {divXp,btnRegar,timer} from '../index.js';
+import {setTime} from '../index.js';
 
 export function saveLevel(level) {
     localStorage.setItem('level',level);
@@ -120,10 +28,17 @@ export function loadExp() {
     divXp.children[0].style.width = `${exp}rem`;
     if (exp >= 12) {
         setTimeout(() => {
-            exp = 0;
-            divXp.children[0].style.width = `${exp}rem`;
-            localStorage.setItem('exp',exp);
-        },500);
+            const time = setInterval(() => {
+                exp -= .3;
+                divXp.children[0].style.width = `${exp}rem`;
+                if (exp <= 0) {
+                    exp = 0;
+                    divXp.children[0].style.width = `${exp}rem`;
+                    clearInterval(time)
+                    localStorage.setItem('exp',exp);
+                }
+            }, 100);
+        }, 1000);
     }
     return exp;
 }
@@ -144,6 +59,9 @@ export function loadText(needText = false) {
         case 1:
             text = 'Eres mi tiktoker preciosa';
         break;
+        case 2:
+            text = 'Eres lo mejor que me ha pasado en esta vida mi reina';
+        break;
     }
 
     if (needText == true) return text;
@@ -163,6 +81,9 @@ export function textImg() {
         break;
         case 1:
             img.src = './assets/img/cute.png';
+        break;
+        case 2:
+            img.src = './assets/img/brillos.png';
         break;
     }
     return img;
