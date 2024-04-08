@@ -185,19 +185,21 @@ export function loadTime() {
     return today
 }
 export function cooldown(setTime) {
-    let countDown = new Date();
-    countDown.setHours(countDown.getHours() + 24);
-
-    let time = setInterval(() => {
-        let startTime = new Date().getTime(),
-        timeLeft = countDown - startTime,
-        hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) - setTime.getHours(),
-        minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)) - setTime.getMinutes(),
-        seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        timer.innerHTML = `${hours}:${minutes}:${seconds}`;
-        if (timeLeft <= 0) {
-            clearInterval(time);
-            timer.innerHTML = 'Regar';
-        }
-    },1000);
+    if (btnRegar.disabled == true) {
+        let countDown = new Date();
+        countDown.setHours(countDown.getHours() + 24);
+    
+        let time = setInterval(() => {
+            let startTime = new Date().getTime(),
+            timeLeft = countDown - startTime,
+            hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) - setTime.getHours(),
+            minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)) - setTime.getMinutes(),
+            seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            timer.innerHTML = `${hours}:${minutes}:${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(time);
+                timer.innerHTML = 'Regar';
+            }
+        },1000);
+    } else { timer.innerHTML = 'Regar'; }
 }
