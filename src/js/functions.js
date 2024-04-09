@@ -1,5 +1,5 @@
 // HTML Selectors - Let Variables - Const Variables
-import {divXp,btnRegar,timer} from '../index.js';
+import {divXp,btnRegar,timer,divNew} from '../index.js';
 import {setTime} from '../index.js';
 
 export function saveLevel(level) {
@@ -123,4 +123,74 @@ export function cooldown(setTime) {
             }
         },1000);
     } else { timer.innerHTML = 'Regar'; }
+}
+export function loadNew() {
+    let newItem;
+    if (localStorage.getItem('newItem')) {
+        newItem = localStorage.getItem('newItem');
+    } else { newItem = false};
+    return newItem;
+}
+export function addNew(newItem) {
+    if(newItem == true) {
+        localStorage.setItem('newItem',newItem);
+        const span = document.createElement('span');
+        divNew.append(span);
+    } else {
+        localStorage.removeItem('newItem');
+        divNew.innerHTML = '';
+    }
+}
+export function addRewards(rewards,level) {
+    if (level == 2) {
+        rewards.push('bg');
+        rewards.push('gift');
+    } else if (level == 3) {
+        rewards.push('bg');
+        rewards.push('gift');
+    }
+    localStorage.setItem('rewards',JSON.stringify(rewards))
+    return rewards;
+}
+export function loadRewards() {
+    let rewards;
+    if (JSON.parse(localStorage.getItem('rewards'))) {
+        rewards = JSON.parse(localStorage.getItem('rewards'));
+    } else { rewards = []};
+    return rewards;
+}
+export function saveEmails(rewards) {
+    const emails = rewards.length;
+    localStorage.setItem('emails',emails);
+    return emails;
+}
+export function loadEmails() {
+    let emails;
+    if (localStorage.getItem('emails')) {
+        emails = localStorage.getItem('emails');
+    } else {emails = 0};
+    return emails;
+}
+export function msEmail(rewards) {
+    const reward = rewards.shift();
+    let text;
+    switch(reward) {
+        case 'bg':
+            text = 'Has Desbloqueado un nuevo Background';
+        break;
+        case 'gift':
+            text = 'Has Desbloqueado un nuevo regalo';
+        break;
+    }
+    return text;
+}
+export function saveTasks(tasks) {
+    localStorage.setItem('tasks',JSON.stringify(tasks))
+}
+export function loadTasks() {
+    let tasks;
+    if (localStorage.getItem('tasks')) {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    } else { tasks = []};
+    return tasks;
 }
