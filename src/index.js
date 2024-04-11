@@ -110,7 +110,7 @@ btnRegar.addEventListener('click',() => {
         divMessage.innerHTML = '';
         nText += 1;
         saveText(nText);
-    },8500);
+    },10000);
     tasks = game.tasks(tasks,level);
     btnGift();
 });

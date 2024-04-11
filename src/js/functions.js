@@ -63,7 +63,10 @@ export function loadText(needText = false) {
             text = 'Eres lo mejor que me ha pasado en esta vida mi reina';
         break;
         case 3:
-            text = 'No quiero que te separes mi lado, tu eres mi complemento';
+            text = 'No quiero que te separes de mi lado, tu eres mi complemento';
+        break;
+        case 3:
+            text = 'Me fascinan tus piecitos';
         break;
     }
 
@@ -90,6 +93,9 @@ export function textImg() {
         break;
         case 3:
             img.src = './assets/img/cute.png';
+        break;
+        case 3:
+            img.src = './assets/img/encanto.png';
         break;
     }
     return img;
