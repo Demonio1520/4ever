@@ -65,7 +65,7 @@ export function loadText(needText = false) {
         case 3:
             text = 'No quiero que te separes de mi lado, tu eres mi complemento';
         break;
-        case 3:
+        case 4:
             text = 'Me fascinan tus piecitos';
         break;
     }
@@ -94,7 +94,7 @@ export function textImg() {
         case 3:
             img.src = './assets/img/cute.png';
         break;
-        case 3:
+        case 4:
             img.src = './assets/img/encanto.png';
         break;
     }
