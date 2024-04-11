@@ -1,6 +1,6 @@
 // HTML Selectors - Let Variables - Const Variables
-import {divXp,btnRegar,timer,divNew} from '../index.js';
-import {setTime} from '../index.js';
+import {divXp,btnRegar,timer,divNew, background} from '../index.js';
+import {game,setTime,tasks} from '../index.js';
 
 export function saveLevel(level) {
     localStorage.setItem('level',level);
@@ -62,6 +62,9 @@ export function loadText(needText = false) {
         case 2:
             text = 'Eres lo mejor que me ha pasado en esta vida mi reina';
         break;
+        case 3:
+            text = 'No quiero que te separes mi lado, tu eres mi complemento';
+        break;
     }
 
     if (needText == true) return text;
@@ -84,6 +87,9 @@ export function textImg() {
         break;
         case 2:
             img.src = './assets/img/brillos.png';
+        break;
+        case 3:
+            img.src = './assets/img/cute.png';
         break;
     }
     return img;
@@ -124,22 +130,20 @@ export function cooldown(setTime) {
         },1000);
     } else { timer.innerHTML = 'Regar'; }
 }
-export function loadNew() {
-    let newItem;
-    if (localStorage.getItem('newItem')) {
-        newItem = localStorage.getItem('newItem');
-    } else { newItem = false};
-    return newItem;
-}
-export function addNew(newItem) {
-    if(newItem == true) {
-        localStorage.setItem('newItem',newItem);
+export function addNew(email,event = true) {
+    if(email > 0 && event == true) {
         const span = document.createElement('span');
         divNew.append(span);
-    } else {
-        localStorage.removeItem('newItem');
-        divNew.innerHTML = '';
+    } else { event = false; }
+    if (event == false) {
+        if (document.querySelectorAll('span')[2]) {
+            document.querySelectorAll('span')[2].remove();
+        }
+        if (document.querySelector('.gift')) {
+            document.querySelector('.gift').style.bottom = '5rem';
+        }
     }
+    return event;
 }
 export function addRewards(rewards,level) {
     if (level == 2) {
@@ -172,11 +176,11 @@ export function loadEmails() {
     return emails;
 }
 export function msEmail(rewards) {
-    const reward = rewards.shift();
     let text;
-    switch(reward) {
+    switch(rewards[0]) {
         case 'bg':
             text = 'Has Desbloqueado un nuevo Background';
+            rewards.shift();
         break;
         case 'gift':
             text = 'Has Desbloqueado un nuevo regalo';
@@ -193,4 +197,52 @@ export function loadTasks() {
         tasks = JSON.parse(localStorage.getItem('tasks'));
     } else { tasks = []};
     return tasks;
+}
+export function unlocked(tasks,event) {
+    let unlocked = false;
+    for (let i = 0; i < tasks.length; i++) {
+        if (event == tasks[i]) {
+            unlocked = true;
+            return '';
+        }
+    }
+    if (unlocked == false) return '<i class="fa-solid fa-lock"></i>'
+}
+export function saveGift(gift) {
+    localStorage.setItem('gift',gift);
+}
+export function loadGift() {
+    let gift;
+    if (localStorage.getItem('gift')) {
+        gift = localStorage.getItem('gift');
+    } else { gift = 0};
+    return gift;
+}
+export function giftText(gift) {
+    let text;
+    switch(gift) {
+        case 0:
+            text = 'Tienes un cupon para comer heladitos';
+        break;
+        case 1:
+            text = 'Tienes un cupon para comer perros';
+        break;
+    }
+    return text;
+}
+export function loadBg() {
+    let bg;
+    if (localStorage.getItem('bg')) {
+        bg = localStorage.getItem('bg');
+    } else { bg = 0};
+    return bg;
+}
+export function bgSelected(background,tasks,event) {
+    let bg = 'bg_' + background;
+    for (let i = 0; i < tasks.length; i++) {
+        if (bg == tasks[i]) {
+            return event.className.charAt(this.className.length - 1);
+        }
+    }
+    return background;
 }

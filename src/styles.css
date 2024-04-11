@@ -263,3 +263,45 @@ img {
     color: black;
     font-size: 3rem;
 }
+.gift {
+    bottom: 5rem;
+    color: black;
+    display: flex;
+    font-size: 4rem;
+    padding-right: 1rem;
+    justify-content: end;
+    position: relative;
+    transition: color .3s ease-in;
+}
+.gift:hover {
+    color: red;
+}
+.div-gift {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 2%;
+    bottom: 70vh;
+    height: 40vh;
+    margin: 0 auto;
+    max-width: 80%;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+}
+.div-gift h2 {
+    background-color: red;
+    border-bottom: 2px solid black;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 1rem 0;
+}
+.div-gift img {
+    height: 5rem;
+    width: 5rem;
+}
+.div-gift div {
+    position: absolute;
+    bottom: 0;
+    max-width: 100%;
+}

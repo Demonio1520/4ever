@@ -1,5 +1,5 @@
-import {divFlower,divRegadera,divDrops,divMessage,divVersion,nText,divNew, btnChest} from '../index.js';
-import {loadText,textImg,addNew,msEmail,saveTasks} from './functions.js';
+import {divFlower,divRegadera,divDrops,divMessage,divVersion,nText,divNew, btnChest, game} from '../index.js';
+import {loadText,textImg,addNew,msEmail,saveTasks, unlocked} from './functions.js';
 
 export class Flower {
     constructor(level) {
@@ -69,10 +69,10 @@ export class Flower {
 }
 
 export class Game {
-    constructor(version,bg,newItem) {
+    constructor(version,bg,rewards) {
         divVersion.querySelector('p').textContent = `V-${version}`
         this.background(bg)
-        addNew(newItem);
+        this.gift(rewards);
     }
     newExp = (level) => {
         let exp = 0;
@@ -97,10 +97,11 @@ export class Game {
     }
     tasks = (tasks,level) => {
         tasks = [];
-        if (level == 2) {
+        if (level > 1) {
             tasks.push('bg_1');
             tasks.push('gift_1');
-        } else if (level == 3) {
+        }
+        if (level > 2) {
             tasks.push('bg_2');
             tasks.push('gift_2');
         }
@@ -108,37 +109,25 @@ export class Game {
         return tasks;
     }
     background = (bg) => {
-        const style = document.createElement('style');
-        document.body.appendChild(style);
-        if (bg > 0) {
-            style.textContent += `body {
-                background-image: url("./assets/backgrounds/bg_${bg}.jpg");
-                background-position: center center;
-                background-repeat:  no-repeat;
-                background-size: cover;
-            }`;
-        } else {
-            switch(bg) {
-                case 0:
-                    bg = 'white';
-                break;
-            }
-            style.innerHTML += `body {
-                background-color: ${bg};
-            }`;
-        }
+        const style = document.querySelectorAll('style')[1];
+        style.innerHTML = `body {
+            background-image: url("./assets/backgrounds/bg_${bg}.jpg");
+            background-position: center center;
+            background-repeat:  no-repeat;
+            background-size: cover;
+        }`;
     }
-    options = (l) => {
-        const divChest = document.createElement('div');
-        divChest.classList.add('options');
-        divChest.innerHTML = `<h2>Opciones</h2>
+    options = (tasks) => {
+        const divOptions = document.createElement('div');
+        divOptions.classList.add('options');
+        divOptions.innerHTML = `<h2>Opciones</h2>
         <p>Cambiar Background</p>
         <div class="div-backgrounds">
-            <div class="bg-0"></div>
-            <div class="bg-1"><i class="fa-solid fa-lock"></i></div>
-            <div class="bg-2"><i class="fa-solid fa-lock"></i></div>
+            <div id="bg" class="bg-0"></div>
+            <div id="bg" class="bg-1">${unlocked(tasks,'bg_1')}</div>
+            <div id="bg" class="bg-2">${unlocked(tasks,'bg_2')}</div>
         </div>`;
-        divNew.append(divChest);
+        divNew.append(divOptions);
         const style = document.querySelector('style');
         style.innerHTML += `.bg-0 {
             background-color: white;
@@ -161,21 +150,42 @@ export class Game {
                 width: calc(25% - 1rem);
             }`;
         }
+        if (document.querySelector('.gift') && document.querySelectorAll('span')[2]) {
+            divOptions.style.bottom = '87vh';
+        } else if (document.querySelector('.gift')) {
+            divOptions.style.bottom = '82vh';
+        } else if (document.querySelectorAll('span')[2]) {
+            divOptions.style.bottom = '80vh';  
+        }
     }
     chest = (email) => {
         const divChest = document.createElement('div');
         divChest.classList.add('chest');
-        divChest.innerHTML = '<h2>Recompensas</h2>';
-        divNew.append(divChest);
+        divChest.innerHTML = `<h2>Recompensas</h2>`;
+        divNew.appendChild(divChest);
         for (let i = 0; i < email; i++) {
-            const div = document.createElement('div'),
-            font = document.createElement('i'),
-            p = document.createElement('p');
-            font.id = 'email';
-            font.classList.add('fa-solid','fa-envelope');
-            p.textContent = 'Nuevo';
-            divChest.append(div);
-            div.append(font,p);
+            divChest.innerHTML += `
+            <div>
+                <i id="email" class="fa-solid fa-envelope"></i>
+                <p>Nuevo</p>
+            </div>`;
+        }
+        if (document.querySelector('.gift')) {
+            divChest.style.bottom = '82vh';
+        }
+    }
+    gift = (rewards) => {
+        if (document.querySelector('.gift')) document.querySelector('.gift').remove();
+        for (let i = 0; i < rewards.length; i++) {
+            if (rewards[i] == 'gift') {
+                const divGift = document.createElement('div');
+                divGift.classList.add('gift');
+                divGift.innerHTML = `<i id="gift" class="fa-solid fa-gift"></i>`;
+                divNew.append(divGift);
+                if (document.querySelectorAll('span')[2]) {
+                    divGift.style.bottom = '9rem';
+                }
+            }
         }
     }
 }
