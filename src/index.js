@@ -1,6 +1,6 @@
 import {Flower,Game} from './js/class.js';
 import {loadLevel,saveLevel,loadExp,saveExp,loadText,saveText,
-loadTime,addNew,loadTasks,addRewards,loadRewards,loadEmails,saveEmails,msEmail,
+loadTime,saveTime,addNew,loadTasks,addRewards,loadRewards,loadEmails,saveEmails,msEmail,
 loadGift,saveGift,giftText,loadBg} from './js/functions.js';
 import './css/normalize.css';
 import './styles.css';
@@ -88,7 +88,7 @@ btnOptions.addEventListener('click',() => {
     }
 });
 btnRegar.addEventListener('click',() => {
-    // saveTime(today,month,year);
+    saveTime(today,month,year);
     flower.water();
     exp = exp + game.newExp(level);
     saveExp(exp);
