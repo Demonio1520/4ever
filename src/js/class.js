@@ -109,8 +109,8 @@ export class Game {
         return tasks;
     }
     background = (bg) => {
-        const style = document.querySelectorAll('style')[1];
-        style.innerHTML = `body {
+        const style = document.querySelector('style');
+        style.innerHTML += `body {
             background-image: url("./assets/backgrounds/bg_${bg}.jpg");
             background-position: center center;
             background-repeat:  no-repeat;

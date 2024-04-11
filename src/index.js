@@ -85,7 +85,6 @@ btnOptions.addEventListener('click',() => {
                         game.background(background);
                     }
                 }
-                console.log(event);
             });
         });
     }
