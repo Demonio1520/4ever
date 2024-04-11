@@ -1,9 +1,7 @@
 import {Flower,Game} from './js/class.js';
 import {loadLevel,saveLevel,loadExp,saveExp,loadText,saveText,
 loadTime,addNew,loadTasks,addRewards,loadRewards,loadEmails,saveEmails,msEmail,
-loadGift,saveGift,giftText,
-loadBg,
-bgSelected} from './js/functions.js';
+loadGift,saveGift,giftText,loadBg} from './js/functions.js';
 import './css/normalize.css';
 import './styles.css';
 
@@ -20,7 +18,7 @@ btnOptions = document.querySelector('#options'),
 btnRegar = document.querySelector('#btn-regar'),
 btnChest = document.querySelector('#btn-chest');
 
-export let nText = loadText(), version = '2.2', setTime = new Date(), today = loadTime(),
+export let nText = loadText(), version = '2.3', setTime = new Date(), today = loadTime(),
 background = loadBg(), month = new Date().getMonth(), year = new Date().getFullYear();
 
 let level = loadLevel(), exp = loadExp(), email = loadEmails(), newMs = addNew(email),

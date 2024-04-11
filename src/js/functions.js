@@ -243,12 +243,3 @@ export function loadBg() {
     } else { bg = 0};
     return bg;
 }
-export function bgSelected(background,tasks,event) {
-    let bg = 'bg_' + background;
-    for (let i = 0; i < tasks.length; i++) {
-        if (bg == tasks[i]) {
-            return event.className.charAt(this.className.length - 1);
-        }
-    }
-    return background;
-}
