@@ -1,6 +1,6 @@
 {
   "name": "4ever",
-  "version": "2.3.0",
+  "version": "2.5.0",
   "description": "Initial Webpack Proyect",
   "main": "index.js",
   "scripts": {

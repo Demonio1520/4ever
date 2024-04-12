@@ -1,7 +1,5 @@
-import {Flower,Game} from './js/class.js';
-import {loadLevel,saveLevel,loadExp,saveExp,loadText,saveText,
-loadTime,saveTime,addNew,loadTasks,addRewards,loadRewards,loadEmails,saveEmails,msEmail,
-loadGift,saveGift,giftText,loadBg} from './js/functions.js';
+import { FlowerClass, GameClass, LoadClass, SaveClass } from './js/class.js';
+import { addNew, emailText, giftText } from './js/functions.js';
 import './css/normalize.css';
 import './styles.css';
 
@@ -11,49 +9,49 @@ divFlower = document.querySelector('.div-flower'),
 divRegadera = document.querySelector('.div-regadera'),
 divDrops = document.querySelector('.div-drops'),
 divMessage = document.querySelector('.message'),
-divXp = document.querySelector('.xp'),
+divExp = document.querySelector('.exp'),
 divNew = document.querySelector('.new'),
+style = document.querySelector('#background'),
 timer = document.querySelectorAll('span')[1],
 btnOptions = document.querySelector('#options'),
 btnRegar = document.querySelector('#btn-regar'),
 btnChest = document.querySelector('#btn-chest');
 
-export let nText = loadText(), version = '2.3', setTime = new Date(), today = loadTime(),
-background = loadBg(), month = new Date().getMonth(), year = new Date().getFullYear();
+export const Load = new LoadClass, Save = new SaveClass();
 
-let level = loadLevel(), exp = loadExp(), email = loadEmails(), newMs = addNew(email),
-tasks = loadTasks(), rewards = loadRewards(), gift = loadGift();
-export const flower = new Flower(level),
-game = new Game(version,background,rewards);
+const setTime = new Date(), today = Load.loadTime(), month = setTime.getMonth(), year = setTime.getFullYear();
+
+let version = '2.5', level = Load.loadLevel(), exp = Load.loadExp(), text = Load.loadText(), background = Load.loadBackground(),
+tasks = Load.loadTasks(), rewards = Load.loadRewards(), email = Load.loadEmail(), newMessage = addNew(email), gift = Load.loadGift();
+
+export const Flower = new FlowerClass(level), Game = new GameClass(version,level,exp,background,rewards);
 
 function btnGift() {
-    if (document.querySelector('#gift')) {
-        const btnGift = document.querySelector('#gift');
+    if (document.querySelector('.gift')) {
+        const btnGift = document.querySelector('.gift');
         btnGift.addEventListener('click',() => {
-            if(document.querySelector('.div-gift')) {
+            if (document.querySelector('.div-gift')) {
                 document.querySelector('.div-gift').remove();
-                rewards = rewards.filter(item => item !== 'gift');
-                localStorage.setItem('rewards',JSON.stringify(rewards));
-                game.gift(rewards);
+                for (let i = 0; i < rewards.length; i++) {
+                    if (rewards[i] == 'gift') { rewards.splice(i,1) }
+                }
+                console.log('click');
+                Save.saveRewards(rewards);
+                Game.gift(rewards);
                 gift += 1, saveGift(gift);
             } else {
-                if(document.querySelector('.options')) {
-                    document.querySelector('.options').remove();
-                } else if (document.querySelector('.chest')) {
-                    document.querySelector('.chest').remove();
-                }
-                const divGift = document.createElement('div');
-                divGift.classList.add('div-gift');
-                divGift.innerHTML = `<h2>Nuevo Regalo</h2>
-                <p class="mt-4 fw-bold">${giftText(gift)}</p>
-                <img src="./assets/img/cute.png" alt="Emoji">
-                <div style="display: flex;">
-                    <small class="mb-2 fw-bold">Tomale cap a tu regalo y envialo</small>
+                if (document.querySelector('.options')) { document.querySelector('.options').remove(); }
+                else if (document.querySelector('.chest')) { document.querySelector('.chest').remove(); }
+                divNew.innerHTML += `
+                <div class="div-gift">
+                    <h2>Nuevo Regalo</h2>
+                    <p class="mt-4 fw-bold">${giftText(gift)}</p>
+                    <img src="./assets/emojis/cute.png" alt="Emoji">
+                    <div>
+                        <small class="fw-bold my-0">Tomale cap a tu regalo y envialo</small>
+                    </div>
                 </div>`;
-                divNew.appendChild(divGift);
-                if(document.querySelectorAll('span')[2]) {
-                    divGift.style.bottom = '75vh'
-                }
+                if(document.querySelectorAll('span')[2]) { document.querySelector('.div-gift').style.bottom = '75vh' }
             }
         });
     }
@@ -62,89 +60,54 @@ function btnGift() {
 // Events
 
 btnOptions.addEventListener('click',() => {
-    if(document.querySelector('.options')) {
-        document.querySelector('.options').remove();
-    } else {
-        if (document.querySelector('.chest')) {
-            document.querySelector('.chest').remove();
-        } else if (document.querySelector('.div-gift')) {
-            document.querySelector('.div-gift').remove();
-        }
-        game.options(tasks);
-        const bg = document.querySelectorAll('#bg');
+    Game.options(tasks);
+    const bg = document.querySelectorAll('#bg');
 
-        bg.forEach(function(bg) {
-            bg.addEventListener('click',function() {
-                const event = 'bg_' + this.className.charAt(this.className.length - 1);
-                for (let i = 0; i < tasks.length; i++) {
-                    if (event == tasks[i] || event == 'bg_0') {
-                        background = this.className.charAt(this.className.length - 1);
-                        localStorage.setItem('bg',background);
-                        game.background(background);
-                    }
+    bg.forEach(function(bg) {
+        bg.addEventListener('click',function() {
+            const event = 'bg_' + this.className.charAt(this.className.length - 1);
+            for (let i = 0; i < tasks.length; i++) {
+                if (event == tasks[i] || event == 'bg_0') {
+                    background = this.className.charAt(this.className.length - 1);
+                    Save.saveBackground(background);
+                    Game.background(background);
                 }
-            });
+            }
         });
-    }
+    });
 });
 btnRegar.addEventListener('click',() => {
-    saveTime(today,month,year);
-    flower.water();
-    exp = exp + game.newExp(level);
-    saveExp(exp);
-    if (exp >= 12) {
-        level += 1, exp = 0;
-        rewards = addRewards(rewards,level);
-        email = saveEmails(rewards);
-        newMs = addNew(email);
-        saveLevel(level);
-        game.gift(rewards);
-        setTimeout(() => {
-            flower.flower(level);
-            loadLevel();
-        }, 5500);
+    // saveTime(today,month,year);
+    Flower.water(text);
+    text += 1, Save.saveText(text);
+    exp = Game.returnExp(exp,level), Game.divExp(level);
+    if (exp == 0) {
+        level ++;
+        rewards = Game.rewards(rewards,level);
+        email += Game.email(email,level,false);
+        newMessage = addNew(email);
+        Game.gift(rewards);
     }
-    setTimeout(() => {
-        divMessage.innerHTML = '';
-        nText += 1;
-        saveText(nText);
-    },10000);
-    tasks = game.tasks(tasks,level);
-    btnGift();
+    tasks = Game.tasks(level);
 });
 btnChest.addEventListener('click',() => {
-    if(document.querySelector('.chest')) {
-        document.querySelector('.chest').remove();
-    } else {
-        if(document.querySelector('.options')) {
-            document.querySelector('.options').remove();
-        } else if (document.querySelector('.div-gift')) {
-            document.querySelector('.div-gift').remove();
-        }
-        if (newMs == true) newMs = addNew(email,false);
-        game.chest(email);
-        const letter = document.querySelectorAll('#email');
-    
-        letter.forEach(function(letter) {
-            letter.addEventListener('click',function(event) {
-                const parent = event.target.parentNode;
-                this.removeAttribute('class');
-                this.classList.add('fa-solid','fa-envelope-open');
-    
-                setTimeout(() => {
-                    parent.innerHTML = msEmail(rewards);
-                    email -= 1;
-                    localStorage.setItem('emails',email);
-                    localStorage.setItem('rewards',JSON.stringify(rewards));
-                    rewards = loadRewards();
-                    email = loadEmails();
-                    setTimeout(() => {
-                        parent.remove();
-                    },3000);
-                },1000);
-            });
-        });
-    } rewards[0] 
-});
+    if (newMessage == true) { newMessage = addNew(email,false); }
+    Game.chest(email);
+    const letter = document.querySelectorAll('#email');
 
-btnGift();
+    letter.forEach(function(letter) {
+        letter.addEventListener('click',function(event) {
+            const parent = event.target.parentNode;
+            this.removeAttribute('class');
+            this.classList.add('fa-solid','fa-envelope-open');
+
+            setTimeout(() => {
+                parent.innerHTML = emailText(rewards);
+                email -= 1, Save.saveEmail(email);
+                setTimeout(() => {
+                    parent.remove();
+                }, 3000);
+            }, 1000);
+        });
+    });
+});
