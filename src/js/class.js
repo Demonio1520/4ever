@@ -1,4 +1,4 @@
-import {divFlower,divRegadera,divDrops,divMessage,divVersion,style,divNew,divExp,btnRegar} from '../index.js';
+import {divFlower,divRegadera,divDrops,divMessage,divVersion,style,divNew,divExp,btnRegar,btnGift} from '../index.js';
 import { Flower,Game, Load, Save } from '../index.js';
 import {loadExp,saveTasks, unlocked} from './functions.js';
 
@@ -168,6 +168,14 @@ export class GameClass {
                 text = 'Me fascinan tus piecitos';
                 img = './assets/emojis/encanto.png';
             break;
+            case 5:
+                text = 'Eres super talentosa dibujando';
+                img = './assets/emojis/happier.png';
+            break;
+            case 6:
+                text = 'Eres la mas leal del mundo';
+                img = './assets/emojis/heart.png';
+            break;
         } if (event == true) { return text; } else { return img; }
     }
     background = (bg) => {
@@ -290,12 +298,9 @@ export class GameClass {
         if (document.querySelector('.gift')) { document.querySelector('.gift').remove(); }
         for (let i = 0; i < rewards.length; i++) {
             if (rewards[i] == 'gift') {
-                divNew.innerHTML += `
-                <div class="gift">
-                    <i id="gift" class="fa-solid fa-gift"></i>
-                </div>`;
-
-                if (document.querySelectorAll('span')[2]) { document.querySelector('.gift').style.bottom = '9rem'; }
+                divNew.children[0].classList.add('gift');
+                divNew.children[0].innerHTML = `<i id="gift" class="fa-solid fa-gift"></i>`;
+                if (document.querySelectorAll('span')[2]) { document.querySelectorAll('span')[2].style.bottom = '6rem'; }
             }
         }
     }

@@ -23,18 +23,17 @@ export function cooldown(setTime) {
         },1000);
     } else { timer.innerHTML = 'Regar'; }
 }
-export function addNew(email,event = true) {
-    // If Event == true ( There are a new Emails )
-    // If Event == false ( No new Emails )
-    if(email > 0 && event == true) {
+export function addNew(email,newMessage) {
+    if(email > 0 && newMessage == false) {
         const span = document.createElement('span');
         divNew.append(span);
-    } else { event = false; }
-    if (event == false) {
-        if (document.querySelectorAll('span')[2]) { document.querySelectorAll('span')[2].remove(); }
-        if (document.querySelector('.gift')) { document.querySelector('.gift').style.bottom = '5rem'; }
+        newMessage = true;
+    } else if (newMessage == true) { document.querySelectorAll('span')[2].remove(); newMessage = false;
+    } else { newMessage == false; }
+    if (document.querySelector('.gift')) {
+        if (document.querySelectorAll('span')[2]) { document.querySelectorAll('span')[2].style.bottom = ' 6rem'; }
     }
-    return event;
+    return newMessage;
 }
 export function emailText(rewards) {
     let text, event = rewards;

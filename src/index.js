@@ -15,47 +15,17 @@ style = document.querySelector('#background'),
 timer = document.querySelectorAll('span')[1],
 btnOptions = document.querySelector('#options'),
 btnRegar = document.querySelector('#btn-regar'),
-btnChest = document.querySelector('#btn-chest');
+btnChest = document.querySelector('#btn-chest'),
+btnGift = document.querySelector('#btn-gift');
 
 export const Load = new LoadClass, Save = new SaveClass();
 
 const setTime = new Date(), today = Load.loadTime(), month = setTime.getMonth(), year = setTime.getFullYear();
 
-let version = '2.5', level = Load.loadLevel(), exp = Load.loadExp(), text = Load.loadText(), background = Load.loadBackground(),
-tasks = Load.loadTasks(), rewards = Load.loadRewards(), email = Load.loadEmail(), newMessage = addNew(email), gift = Load.loadGift();
+let version = '2.6', level = Load.loadLevel(), exp = Load.loadExp(), text = Load.loadText(), background = Load.loadBackground(),
+tasks = Load.loadTasks(), rewards = Load.loadRewards(), email = Load.loadEmail(), newMessage = addNew(email,false), gift = Load.loadGift();
 
 export const Flower = new FlowerClass(level), Game = new GameClass(version,level,exp,background,rewards);
-
-function btnGift() {
-    if (document.querySelector('.gift')) {
-        const btnGift = document.querySelector('.gift');
-        btnGift.addEventListener('click',() => {
-            if (document.querySelector('.div-gift')) {
-                document.querySelector('.div-gift').remove();
-                for (let i = 0; i < rewards.length; i++) {
-                    if (rewards[i] == 'gift') { rewards.splice(i,1) }
-                }
-                console.log('click');
-                Save.saveRewards(rewards);
-                Game.gift(rewards);
-                gift += 1, saveGift(gift);
-            } else {
-                if (document.querySelector('.options')) { document.querySelector('.options').remove(); }
-                else if (document.querySelector('.chest')) { document.querySelector('.chest').remove(); }
-                divNew.innerHTML += `
-                <div class="div-gift">
-                    <h2>Nuevo Regalo</h2>
-                    <p class="mt-4 fw-bold">${giftText(gift)}</p>
-                    <img src="./assets/emojis/cute.png" alt="Emoji">
-                    <div>
-                        <small class="fw-bold my-0">Tomale cap a tu regalo y envialo</small>
-                    </div>
-                </div>`;
-                if(document.querySelectorAll('span')[2]) { document.querySelector('.div-gift').style.bottom = '75vh' }
-            }
-        });
-    }
-}
 
 // Events
 
@@ -77,7 +47,7 @@ btnOptions.addEventListener('click',() => {
     });
 });
 btnRegar.addEventListener('click',() => {
-    // saveTime(today,month,year);
+    saveTime(today,month,year);
     Flower.water(text);
     text += 1, Save.saveText(text);
     exp = Game.returnExp(exp,level), Game.divExp(level);
@@ -85,13 +55,13 @@ btnRegar.addEventListener('click',() => {
         level ++;
         rewards = Game.rewards(rewards,level);
         email += Game.email(email,level,false);
-        newMessage = addNew(email);
+        newMessage = addNew(email,newMessage);
         Game.gift(rewards);
     }
     tasks = Game.tasks(level);
 });
 btnChest.addEventListener('click',() => {
-    if (newMessage == true) { newMessage = addNew(email,false); }
+    newMessage = addNew(email,newMessage);
     Game.chest(email);
     const letter = document.querySelectorAll('#email');
 
@@ -110,4 +80,34 @@ btnChest.addEventListener('click',() => {
             }, 1000);
         });
     });
+});
+btnGift.addEventListener('click',() => {
+    if (document.querySelector('.div-gift')) { document.querySelector('.div-gift').remove();
+    } else {
+        if (document.querySelector('.options')) { document.querySelector('.options').remove(); }
+        else if (document.querySelector('.chest')) { document.querySelector('.chest').remove(); }
+        divNew.innerHTML += `
+        <div class="div-gift">
+            <h2>Nuevo Regalo</h2>
+            <p class="mt-4 fw-bold">${giftText(gift)}</p>
+            <img src="./assets/emojis/cute.png" alt="Emoji">
+            <div>
+                <small class="fw-bold my-0">Tomale cap a tu regalo y envialo</small>
+            </div>
+        </div>`;
+        setTimeout(() => {
+            document.querySelector('.div-gift').remove();
+        }, 5000);
+
+        for (let i = 0; i < rewards.length; i++) {
+            if (rewards[i] == 'gift') { rewards.splice(i,1) }
+        }
+        Save.saveRewards(rewards);
+        Game.gift(rewards);
+        gift += 1, Save.saveGift(gift);
+        if(document.querySelectorAll('span')[2]) { 
+            document.querySelector('.div-gift').style.bottom = '70vh'; 
+            document.querySelectorAll('span')[2].style.bottom = '2rem';
+        }
+    }
 });
