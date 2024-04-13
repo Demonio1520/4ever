@@ -1,6 +1,6 @@
 import {divFlower,divRegadera,divDrops,divMessage,divVersion,style,divNew,divExp,btnRegar,btnGift} from '../index.js';
 import { Flower,Game, Load, Save } from '../index.js';
-import {loadExp,saveTasks, unlocked} from './functions.js';
+import {loadExp,saveTasks, cooldown,unlocked} from './functions.js';
 
 export class FlowerClass {
     constructor(level) {
@@ -335,7 +335,7 @@ export class LoadClass {
         if (localStorage.getItem('today')) {
             (localStorage.getItem('today') < today || localStorage.getItem('month') < month || localStorage.getItem('year') < yeer) ?
             btnRegar.disabled = false : btnRegar.disabled = true;
-            cooldown(setTime);
+            cooldown();
         } else { btnRegar.disabled = false; }
         return today
     }

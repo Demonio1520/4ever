@@ -47,7 +47,7 @@ btnOptions.addEventListener('click',() => {
     });
 });
 btnRegar.addEventListener('click',() => {
-    saveTime(today,month,year);
+    Save.saveTime(today,month,year);
     Flower.water(text);
     text += 1, Save.saveText(text);
     exp = Game.returnExp(exp,level), Game.divExp(level);

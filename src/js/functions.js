@@ -4,7 +4,7 @@ import { Save } from '../index.js';
 
 // Functions
 
-export function cooldown(setTime) {
+export function cooldown() {
     if (btnRegar.disabled == true) {
         let countDown = new Date();
         countDown.setHours(countDown.getHours() + 24);
@@ -12,8 +12,8 @@ export function cooldown(setTime) {
         let time = setInterval(() => {
             let startTime = new Date().getTime(),
             timeLeft = countDown - startTime,
-            hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) - setTime.getHours(),
-            minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)) - setTime.getMinutes(),
+            hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) - new Date().getHours(),
+            minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)) - new Date().getMinutes(),
             seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
             timer.innerHTML = `${hours}:${minutes}:${seconds}`;
             if (timeLeft <= 0) {
