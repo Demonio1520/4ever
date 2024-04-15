@@ -165,7 +165,7 @@ export class GameClass {
                 img = './assets/emojis/cute.png';
             break;
             case 4:
-                text = 'Me fascinan tus piecitos';
+                text = '¡Me fascinan tus piecitos!';
                 img = './assets/emojis/encanto.png';
             break;
             case 5:
@@ -175,6 +175,14 @@ export class GameClass {
             case 6:
                 text = 'Eres la mas leal del mundo';
                 img = './assets/emojis/heart.png';
+            break;
+            case 7:
+                text = 'Eres una en un millon mi amor';
+                img = './assets/emojis/brillos.png';
+            break;
+            case 8:
+                text = '¿Quien no quisiera tenerte princesa?';
+                img = './assets/emojis/encanto.png';
             break;
         } if (event == true) { return text; } else { return img; }
     }
@@ -190,8 +198,9 @@ export class GameClass {
         const tasks = [];
         if (level > 1) { tasks.push('bg_1'); }
         if (level > 2) { tasks.push('gift_1'); }
-        if (level > 3) { tasks.push('bg_2'); }
-        if (level > 4) { tasks.push('bg_3'), tasks.push('gift_2'), tasks.push('game_1'); }
+        if (level > 3) { tasks.push('bg_2') }
+        if (level > 4) { tasks.push('bg_3','gift_2','game_1'); }
+        if (level > 5) { tasks.push('bg_4','bg_5','bg_6','bg_7','bg_8'); }
         Save.saveTasks(tasks)
         return tasks;
     }
@@ -246,6 +255,12 @@ export class GameClass {
                     <div id="bg" class="bg-0"></div>
                     <div id="bg" class="bg-1">${unlocked(tasks,'bg_1')}</div>
                     <div id="bg" class="bg-2">${unlocked(tasks,'bg_2')}</div>
+                    <div id="bg" class="bg-3">${unlocked(tasks,'bg_3')}</div>
+                    <div id="bg" class="bg-4">${unlocked(tasks,'bg_4')}</div>
+                    <div id="bg" class="bg-5">${unlocked(tasks,'bg_5')}</div>
+                    <div id="bg" class="bg-6">${unlocked(tasks,'bg_6')}</div>
+                    <div id="bg" class="bg-7">${unlocked(tasks,'bg_7')}</div>
+                    <div id="bg" class="bg-8">${unlocked(tasks,'bg_8')}</div>
                 </div>
             </div>`;
             const style = document.querySelector('style');
@@ -257,7 +272,7 @@ export class GameClass {
                 margin: .5rem;
                 width: calc(25% - 1rem);
             }`;
-            for (let i = 1; i < 3; i++) {
+            for (let i = 1; i < 9; i++) {
                 style.innerHTML += `.bg-${i} {
                     align-items: center;
                     background-image: url("./assets/backgrounds/bg_${i}.jpg");
@@ -272,7 +287,7 @@ export class GameClass {
             }
             if (document.querySelector('.gift') && document.querySelectorAll('span')[2]) { document.querySelector('.options').style.bottom = '87vh'; }
             else if (document.querySelector('.gift')) { document.querySelector('.options').style.bottom = '82vh'; }
-            else if (document.querySelectorAll('span')[2]) { document.querySelector('.options').bottom = '80vh'; }
+            else if (document.querySelectorAll('span')[2]) { document.querySelector('.options').style.bottom = '80vh'; }
         }
     }
     chest = (email) => {

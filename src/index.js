@@ -22,11 +22,12 @@ export const Load = new LoadClass, Save = new SaveClass();
 
 const setTime = new Date(), today = Load.loadTime(), month = setTime.getMonth(), year = setTime.getFullYear();
 
-let version = '2.6', level = Load.loadLevel(), exp = Load.loadExp(), text = Load.loadText(), background = Load.loadBackground(),
+let version = '2.7', level = Load.loadLevel(), exp = Load.loadExp(), text = Load.loadText(), background = Load.loadBackground(),
 tasks = Load.loadTasks(), rewards = Load.loadRewards(), email = Load.loadEmail(), newMessage = addNew(email,false), gift = Load.loadGift();
 
 export const Flower = new FlowerClass(level), Game = new GameClass(version,level,exp,background,rewards);
 
+const abc = document.querySelectorAll('span')[2];
 // Events
 
 btnOptions.addEventListener('click',() => {
