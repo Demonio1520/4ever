@@ -148,6 +148,7 @@ export class GameClass {
         // If Event == false ( The user requests Img )
         let img;
         switch(text) {
+            // Nivel 1
             case 0:
                 text = 'Te amo mucho Alejandra';
                 img = './assets/emojis/heart.png';
@@ -156,6 +157,7 @@ export class GameClass {
                 text = 'Eres mi tiktoker preciosa';
                 img = './assets/emojis/cute.png';
             break;
+            // Nivel 2
             case 2:
                 text = 'Eres lo mejor que me ha pasado en esta vida mi reina';
                 img = './assets/emojis/brillos.png';
@@ -168,6 +170,7 @@ export class GameClass {
                 text = '¡Me fascinan tus piecitos!';
                 img = './assets/emojis/encanto.png';
             break;
+            // Nivel 3
             case 5:
                 text = 'Eres super talentosa dibujando';
                 img = './assets/emojis/happier.png';
@@ -184,6 +187,32 @@ export class GameClass {
                 text = '¿Quien no quisiera tenerte princesa?';
                 img = './assets/emojis/encanto.png';
             break;
+            // Nivel 4
+            case 9:
+                text = 'Me encanta cuando te pones toda cariñosa y tierna conmigo';
+                img = './assets/emojis/cute.png';
+            break;
+            case 10:
+                text = 'Ese pircing te queda, ¡UFF!';
+                img = './assets/emojis/encanto.png';
+            break;
+            case 11:
+                text = 'Cada que subes fotos con tus amigas las opacas, demasiado hermosa a su lado';
+                img = './assets/emojis/monkey.png';
+            break;
+            case 12:
+                text = 'Tu no necesitas ni maquilarte, porque eres preciosa a lo natural';
+                img = './assets/emojis/brillos.png';
+            break;
+            case 13:
+                text = 'Necesito psiquiatra, ¡Porque me llevas loquito!';
+                img = './assets/emojis/encanto.png';
+            break;
+            case 14:
+                text = 'No sales de mi mente, ni tampoco esos gemidos';
+                img = './assets/emojis/nervioso.png';
+            break;
+            // Nivel 5
         } if (event == true) { return text; } else { return img; }
     }
     background = (bg) => {
@@ -326,7 +355,7 @@ export class LoadClass {
         let level;
         if (localStorage.getItem('level')) {
             level = localStorage.getItem('level') * 1;
-        } else { level = 1 };
+        } else { level = 4 };
         return level;
     }
     loadExp = () => {
@@ -340,7 +369,7 @@ export class LoadClass {
         let text;
         if (localStorage.getItem('text')) {
             text = localStorage.getItem('text') * 1;
-        } else { text = 0 };
+        } else { text = 9 };
         return text;
     }
     loadTime = () => {

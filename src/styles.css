@@ -18,18 +18,24 @@
 html {
     box-sizing: border-box;
     font-size: 62.5%;
+    height: 100%;
 }
 *, *:before, *:after {
     box-sizing: inherit;
 }
 body {
     font-size: 1.6rem;
-    height: 100vh;
+    max-height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 header {
     font-weight: bold;
     text-align: center;
+    max-height: 10vh;
+}
+footer {
+    max-height: 10vh;
 }
 img {
     max-width: 100%;
@@ -69,16 +75,16 @@ img {
     color: #dfdfdf
 }
 .version {
-    max-width: 7rem;
     background-color: black;
-    border: 1px solid #f0d121;
     color: white;
     font-weight: bold;
-    margin: 1rem auto 0 auto;
+    margin: 0;
     text-align: center;
     text-transform: uppercase;
 }
 .version p {
+    color: #f0d121;
+    font-size: 1rem;
     margin: 0;
 }
 
@@ -143,11 +149,12 @@ img {
 
 .message {
     font-family: cursive;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: bold;
     height: 13rem;
     margin-top: 2rem;
     text-align: center;
+    text-transform: uppercase;
 }
 .message p {
     font-family: cursive;
@@ -160,14 +167,18 @@ img {
 
 /* Site Section */
 
+/* .btn-regar {
+    position: absolute;
+    bottom: 0;
+} */
 .btn-regar button {
     border: 2px solid black;
     border-radius: 100%;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     height: 5rem;
     text-transform: uppercase;
-    width: 33.3vw;
+    width: calc(33.3vw - 2rem);
 }
 .btn-regar button:hover {
     border: 2px solid black;
