@@ -1,6 +1,9 @@
-import {divFlower,divRegadera,divDrops,divMessage,divVersion,style,divNew,divExp,btnRegar,btnGift} from '../index.js';
+// HTML Div Selectors
+import { divLevel, divExp, divRegadera, divDrops, divFlower, divMessage, divNew, divVersion } from '../index.js';
+// HTML Selectors
+import { style, timer, btnOptions, btnGift, btnRegar, btnEmail } from '../index.js';
 import { Flower,Game, Load, Save } from '../index.js';
-import {loadExp,saveTasks, cooldown,unlocked} from './functions.js';
+import { cooldown, unlocked, divDelete } from './functions.js';
 
 export class FlowerClass {
     constructor(level) {
@@ -40,6 +43,8 @@ export class FlowerClass {
         } return grow;
     }
     wateringCan = (event = true) => {
+        // If Event == true ( The flower is being watered )
+        // If Event == false ( The flower has already been watered )
         if (event == true) {
             divRegadera.innerHTML = `<img class="regadera" src="./assets/img/regadera.png" alt="Regadera">`;
         } else {
@@ -47,11 +52,11 @@ export class FlowerClass {
             divRegadera.children[0].style.animation = "unrotate 1s ease-in-out forwards";
             setTimeout(() => {
                 divRegadera.innerHTML = ``;
-            },1200);
+            }, 1200);
         }
     }
     waterDrops = () => {
-        divDrops.innerHTML = `<img class="drops" src="./assets/img/drops.gif" alt="Gotas">`
+        divDrops.innerHTML = `<img class="drops" src="./assets/img/drops.gif" alt="Gotas">`;
     }
     glitters = () => {
         let i = 1;
@@ -60,19 +65,16 @@ export class FlowerClass {
             i++;
             setTimeout(() => {
                 divDrops.children[0].remove();
-            },400);
+            }, 400);
             if (i > 4) { clearInterval(timer); }
-        },200);
-        // setTimeout(() => {
-        //     divDrops.innerHTML = ``;
-        // }, 1000);
+        }, 200);
     }
     addText = (text) => {
         divMessage.innerHTML = `<p>${ Game.returnText(text,true) }</p>
         <img src="${ Game.returnText(text,false) }" alt="Emoji">`;
         setTimeout(() => {
             divMessage.innerHTML = ``;
-        },5000);
+        }, 6000);
     }
     water = (text) => {
         this.wateringCan();
@@ -85,19 +87,18 @@ export class FlowerClass {
 
 export class GameClass {
     constructor(version,level,exp,bg,rewards) {
-        divVersion.querySelector('p').textContent = `V-${version}`
+        divVersion.children[0].textContent = `V-${version}`;
         this.divLevel(level,exp);
         this.divExp(level);
         this.background(bg);
-        this.gift(rewards);
+        this.divGift(rewards);
     }
     divLevel = (level,exp) => {
         if (exp >= 12) {
             level++; 
-            Flower.createFlower(level)
+            Flower.createFlower(level);
         }
-        const span = document.querySelectorAll('span')[0];
-        span.textContent = level;
+        divLevel.children[0].textContent = `level ${level}`;
         Save.saveLevel(level);
     }
     divExp = (level) => {
@@ -140,8 +141,7 @@ export class GameClass {
             break;
         }
         Save.saveExp(exp);
-        if (exp >= 12) { return 0 }
-        else { return exp; }
+        if (exp >= 12) { return 0 } else { return exp; }
     }
     returnText = (text,event = true) => {
         // If Event == true ( The user requests Text )
@@ -230,7 +230,7 @@ export class GameClass {
         if (level > 3) { tasks.push('bg_2') }
         if (level > 4) { tasks.push('bg_3','gift_2','game_1'); }
         if (level > 5) { tasks.push('bg_4','bg_5','bg_6','bg_7','bg_8'); }
-        Save.saveTasks(tasks)
+        Save.saveTasks(tasks);
         return tasks;
     }
     rewards = (rewards,level) => {
@@ -240,6 +240,7 @@ export class GameClass {
             break;
             case 3:
                 rewards.push('gift');
+                Game.divGift(rewards);
             break;
             case 4:
                 rewards.push('bg');
@@ -248,12 +249,13 @@ export class GameClass {
                 rewards.push('bg');
                 rewards.push('gift');
                 rewards.push('game');
+                Game.divGift(rewards);
             break;
         }
         Save.saveRewards(rewards);
         return rewards;
     }
-    email = (email,level) => {
+    emails = (email,level) => {
         switch(level) {
             case 2:
                 email += 1;
@@ -271,28 +273,20 @@ export class GameClass {
         Save.saveEmail(email);
         return email;
     }
-    options = (tasks) => {
-        if(document.querySelector('.options')) { document.querySelector('.options').remove(); }
-        else if (document.querySelector('.chest')) { document.querySelector('.chest').remove(); }
-        else if (document.querySelector('.div-gift')) { document.querySelector('.div-gift').remove(); }
-        else {
+    divOptions = (tasks) => {
+        if (divDelete() == false) {
             divNew.innerHTML += `
             <div class="options">
                 <h2>Opciones</h2>
                 <p>Cambiar Background</p>
                 <div class="div-backgrounds">
                     <div id="bg" class="bg-0"></div>
-                    <div id="bg" class="bg-1">${unlocked(tasks,'bg_1')}</div>
-                    <div id="bg" class="bg-2">${unlocked(tasks,'bg_2')}</div>
-                    <div id="bg" class="bg-3">${unlocked(tasks,'bg_3')}</div>
-                    <div id="bg" class="bg-4">${unlocked(tasks,'bg_4')}</div>
-                    <div id="bg" class="bg-5">${unlocked(tasks,'bg_5')}</div>
-                    <div id="bg" class="bg-6">${unlocked(tasks,'bg_6')}</div>
-                    <div id="bg" class="bg-7">${unlocked(tasks,'bg_7')}</div>
-                    <div id="bg" class="bg-8">${unlocked(tasks,'bg_8')}</div>
                 </div>
             </div>`;
-            const style = document.querySelector('style');
+            for (let i = 1; i < 9; i++) {
+                document.querySelector('.div-backgrounds').innerHTML += `<div id="bg" class="bg-${i}">${unlocked(tasks,`bg_${i}`)}</div>`;
+            }
+            const style = document.querySelectorAll('style')[0];
             style.innerHTML += `.bg-0 {
                 background-color: white;
                 border: 2px solid black;
@@ -314,37 +308,44 @@ export class GameClass {
                     width: calc(25% - 1rem);
                 }`;
             }
-            if (document.querySelector('.gift') && document.querySelectorAll('span')[2]) { document.querySelector('.options').style.bottom = '87vh'; }
-            else if (document.querySelector('.gift')) { document.querySelector('.options').style.bottom = '82vh'; }
-            else if (document.querySelectorAll('span')[2]) { document.querySelector('.options').style.bottom = '80vh'; }
+            if (document.querySelector('.div-gift') && document.querySelector('span')) { document.querySelector('.options').style.bottom = '87vh'; }
+            else if (document.querySelector('.div-gift')) { document.querySelector('.options').style.bottom = '82vh'; }
+            else if (document.querySelector('span')) { document.querySelector('.options').style.bottom = '80vh'; }
         }
     }
-    chest = (email) => {
-        if(document.querySelector('.chest')) { document.querySelector('.chest').remove(); }
-        else if (document.querySelector('.options')) { document.querySelector('.options').remove(); }
-        else if (document.querySelector('.div-gift')) { document.querySelector('.div-gift').remove(); }
-        else {
+    divEmails = (email) => {
+        if(divDelete() == false) {
             divNew.innerHTML += `
-            <div class="chest">
+            <div class="div-emails">
                 <h2>Recompensas</h2>
             </div>`;
             for (let i = 0; i < email; i++) {
-                document.querySelector('.chest').innerHTML += `
+                document.querySelector('.div-emails').innerHTML += `
                 <div>
                     <i id="email" class="fa-solid fa-envelope"></i>
                     <p>Nuevo</p>
                 </div>`;
             }
-            if (document.querySelector('.gift')) { document.querySelector('.chest').style.bottom = '82vh'; }
+            if (document.querySelector('.div-gift')) { document.querySelector('.div-emails').style.bottom = '82vh'; }
         }
     }
-    gift = (rewards) => {
-        if (document.querySelector('.gift')) { document.querySelector('.gift').remove(); }
+    divGift = (rewards) => {
+        divDelete();
         for (let i = 0; i < rewards.length; i++) {
             if (rewards[i] == 'gift') {
-                divNew.children[0].classList.add('gift');
-                divNew.children[0].innerHTML = `<i id="gift" class="fa-solid fa-gift"></i>`;
-                if (document.querySelectorAll('span')[2]) { document.querySelectorAll('span')[2].style.bottom = '6rem'; }
+                if(document.querySelector('span')) {
+                    divNew.innerHTML = `
+                    <div class="div-gift">
+                        <i id="gift" class="fa-solid fa-gift"></i>
+                    </div>
+                    <span></span>`;
+                    document.querySelector('span').style.bottom = '6rem';
+                } else {
+                    divNew.innerHTML = `
+                    <div class="div-gift">
+                        <i id="gift" class="fa-solid fa-gift"></i>
+                    </div>`;
+                }
             }
         }
     }
@@ -355,7 +356,7 @@ export class LoadClass {
         let level;
         if (localStorage.getItem('level')) {
             level = localStorage.getItem('level') * 1;
-        } else { level = 4 };
+        } else { level = 1 };
         return level;
     }
     loadExp = () => {
@@ -369,19 +370,18 @@ export class LoadClass {
         let text;
         if (localStorage.getItem('text')) {
             text = localStorage.getItem('text') * 1;
-        } else { text = 9 };
+        } else { text = 0 };
         return text;
     }
     loadTime = () => {
         let today = new Date().getDate(),
         month = new Date().getMonth(),
         yeer = new Date().getFullYear();
-        if (localStorage.getItem('today')) {
-            (localStorage.getItem('today') < today || localStorage.getItem('month') < month || localStorage.getItem('year') < yeer) ?
-            btnRegar.disabled = false : btnRegar.disabled = true;
-            cooldown();
+        if (localStorage.getItem('day')) {
+            (localStorage.getItem('day') < today || localStorage.getItem('month') < month || localStorage.getItem('year') < yeer) ?
+            btnRegar.disabled = false : cooldown();
         } else { btnRegar.disabled = false; }
-        return today
+        return today;
     }
     loadBackground = () => {
         let background;
@@ -431,10 +431,11 @@ export class SaveClass {
         localStorage.setItem('text',text);
     }
     saveTime = (today,month,year) => {
-        localStorage.setItem('today',today);
+        localStorage.setItem('day',today);
         localStorage.setItem('month',month);
         localStorage.setItem('year',year);
         btnRegar.disabled = true;
+        cooldown();
     }
     saveBackground = (bg) => {
         localStorage.setItem('background',bg);

@@ -1,5 +1,5 @@
 // HTML Selectors - Let Variables - Const Variables
-import { divExp,btnRegar,timer,divNew, background } from '../index.js';
+import { divNew, btnRegar } from '../index.js';
 import { Save } from '../index.js';
 
 // Functions
@@ -15,25 +15,38 @@ export function cooldown() {
             hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) - new Date().getHours(),
             minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)) - new Date().getMinutes(),
             seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-            timer.innerHTML = `${hours}:${minutes}:${seconds}`;
+            btnRegar.textContent = `${hours}:${minutes}:${seconds}`;
             if (timeLeft <= 0) {
                 clearInterval(time);
-                timer.innerHTML = 'Regar';
+                btnRegar.textContent = 'Regar';
             }
-        },1000);
-    } else { timer.innerHTML = 'Regar'; }
+        }, 1000);
+    } else { btnRegar.textContent = 'Regar'; }
 }
-export function addNew(email,newMessage) {
-    if(email > 0 && newMessage == false) {
+export function unlocked(tasks,event) {
+    for (let i = 0; i < tasks.length; i++) {
+        if (event == tasks[i]) {
+            return '';
+        }
+    } return '<i class="fa-solid fa-lock"></i>';
+}
+export function divDelete() {
+    if(document.querySelector('.options')) { document.querySelector('.options').remove(); }
+    else if (document.querySelector('.div-emails')) { document.querySelector('.div-emails').remove(); }
+    else if (document.querySelector('.gift')) { document.querySelector('.gift').remove(); }
+    else { return false }
+    return true;
+}
+export function addNew(email,event) {
+    if(email > 0 && event == false) {
+        if (document.querySelector('span')) { document.querySelector('span').remove(); }
         const span = document.createElement('span');
         divNew.append(span);
-        newMessage = true;
-    } else if (newMessage == true) { document.querySelectorAll('span')[2].remove(); newMessage = false;
-    } else { newMessage == false; }
-    if (document.querySelector('.gift')) {
-        if (document.querySelectorAll('span')[2]) { document.querySelectorAll('span')[2].style.bottom = ' 6rem'; }
-    }
-    return newMessage;
+        event = true;
+        if(document.querySelector('.div-gift')) { document.querySelector('span').style.bottom = '6rem'; }
+    } else if (email > 0 && event == true) { document.querySelector('span').remove(); event = false;
+    } else { event = false; }
+    return event;
 }
 export function emailText(rewards) {
     let text, event = rewards;
@@ -48,16 +61,6 @@ export function emailText(rewards) {
         break;
     }
     return text;
-}
-export function unlocked(tasks,event) {
-    let unlocked = false;
-    for (let i = 0; i < tasks.length; i++) {
-        if (event == tasks[i]) {
-            unlocked = true;
-            return '';
-        }
-    }
-    if (unlocked == false) return '<i class="fa-solid fa-lock"></i>'
 }
 export function giftText(gift) {
     let text;
