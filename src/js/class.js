@@ -139,6 +139,10 @@ export class GameClass {
                 // Exp MAX => 8 DAYS.
                 exp = exp + 1.5;
             break;
+            case 6:
+                // Exp MAX => 10 DAYS.
+                exp = exp + 1.2;
+            break;
         }
         Save.saveExp(exp);
         if (exp >= 12) { return 0 } else { return exp; }
@@ -213,6 +217,18 @@ export class GameClass {
                 img = './assets/emojis/nervioso.png';
             break;
             // Nivel 5
+            case 15:
+                text = 'Tus besos no salen de mi cabeza';
+                img = './assets/emojis/cute.png';
+            break;
+            case 16:
+                text = 'Estoy muy orgulloso de ti turrón';
+                img = './assets/emojis/heart.png';
+            break;
+            case 17:
+                text = '¿Quién sera cumpleañera dentro de poco?';
+                img = './assets/emojis/happier.png';
+            break;
         } if (event == true) { return text; } else { return img; }
     }
     background = (bg) => {

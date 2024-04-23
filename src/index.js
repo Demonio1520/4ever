@@ -23,7 +23,7 @@ export const Load = new LoadClass, Save = new SaveClass();
 
 const today = Load.loadTime(), month = new Date().getMonth(), year = new Date().getFullYear();
 
-let version = '2.9', level = Load.loadLevel(), exp = Load.loadExp(), text = Load.loadText(), background = Load.loadBackground(),
+let version = '3.0', level = Load.loadLevel(), exp = Load.loadExp(), text = Load.loadText(), background = Load.loadBackground(),
 tasks = Load.loadTasks(), rewards = Load.loadRewards(), email = Load.loadEmail(), newMessage = addNew(email,false), gift = Load.loadGift();
 
 export const Flower = new FlowerClass(level), Game = new GameClass(version,level,exp,background,rewards);
