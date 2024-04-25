@@ -229,6 +229,14 @@ export class GameClass {
                 text = '¿Quién sera cumpleañera dentro de poco?';
                 img = './assets/emojis/happier.png';
             break;
+            case 18:
+                text = 'Algún dia tu y yo viviremos juntos, te lo prometo.';
+                img = './assets/emojis/hand.png';
+            break;
+            case 19:
+                text = 'Tienes un enorme corazón, nunca cambies.';
+                img = './assets/emojis/cute.png';
+            break;
         } if (event == true) { return text; } else { return img; }
     }
     background = (bg) => {
