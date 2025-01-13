@@ -8,55 +8,48 @@
     <title>4ever</title>
 </head>
 <body>
-    <!-- Site Style -->
-    <style></style>
-    <style id="background"></style>
-    <!-- Site Header -->
+    <template id="game">
+        <!-- Site Style -->
+        <style></style>
+        <style id="background"></style>
 
-    <header class="site-header">
-        <div class="div-level">
-            <p>Nivel</p>
-        </div>
+        <!-- Site Header -->
+        <header class="site-header">
+            <div class="level">
+                <p id="level"></p>
+            </div>
+            
+            <div class="exp-bar"></div>
 
-        <div class="div-exp">
-            <div></div>
-        </div>
+            <div class="div-options">
+                <i id="options" class="fa-solid fa-gear"></i>
+            </div>
+        </header>
 
-        <div class="div-options">
-            <i id="options" class="fa-solid fa-gear"></i>
-        </div>
-    </header>
+        <!-- Site Main -->
 
-    <!-- Site Main -->
+        <main class="site-main">
+            <div class="message"></div>
+            <div class="flower"></div>
+            <div class="container-1"></div>
+            <div class="container-2"></div>
+        </main>
 
-    <main>
-        <div class="div-regadera"></div>
+        <!-- Site Footer -->
 
-        <div class="div-drops"></div>
+        <footer class="site-footer">
+            <div class="div-new"></div>
 
-        <div class="div-flower"></div>
+            <div class="div-buttons">
+                <button id="btn-main" class="btn btn-outline-danger">Inicio</button>
+                <button id="btn-games" class="btn btn-outline-primary">Juegos</button>
+                <button id="btn-email" class="btn btn-outline-light"><img src="./assets/img/email.png" alt="Emails"></button>
+            </div>
 
-        <div class="div-message"></div>
-
-        <div class="div-regar text-center">
-            <button id="btn-regar" disabled ="true" class="btn btn-success">Regar</button>
-        </div>
-    </main>
-
-    <!-- Site Footer -->
-
-    <footer class="site-footer">
-        <div class="div-new"></div>
-
-        <div class="div-buttons">
-            <button id="btn-main" class="btn btn-outline-danger">Inicio</button>
-            <button id="btn-games" class="btn btn-outline-primary">Juegos</button>
-            <button id="btn-email" class="btn btn-outline-light"><img src="./assets/img/email.png" alt="Emails"></button>
-        </div>
-
-        <div class="div-version">
-            <p>Version</p>
-        </div>
-    </footer>
+            <div class="div-version">
+                <p>Version</p>
+            </div>
+        </footer>
+    </template>
 </body>
 </html>

@@ -29,14 +29,11 @@ body {
     margin: 0;
     overflow: hidden;
 }
-footer {
-    max-height: 10vh;
-}
 img {
     max-width: 100%;
 }
 
-/* Site Header */
+/* --- Site Header --- */
 
 .site-header {
     align-items: center;
@@ -45,7 +42,7 @@ img {
     color: white;
     display: flex;
     font-weight: bold;
-    max-height: 10vh;
+    height: 10vh;
     padding: 1rem 2rem;
     text-align: center;
     text-transform: uppercase;
@@ -55,13 +52,13 @@ img {
 }
 
 /* Experience container */
-.div-exp {
+.exp-bar {
     border: 2px solid black;
     height: 2rem;
     margin-left: 1rem;
-    width: 12rem;
+    width: 12.5rem;
 }
-.div-exp div {
+.exp {
     background-color: aqua;
     height: 1.6rem;
     width: 0;
@@ -75,82 +72,85 @@ img {
     color: #dfdfdf
 }
 
-/* Site Main */
+/* --- Site Main --- */
 
-/* Watering Can */
-.div-regadera, .div-drops {
+.site-main {
     display: flex;
+    height: 80vh;
     justify-content: center;
-    max-height: 0;
-}
-.regadera {
-    animation: rotate 1s ease-in-out forwards;
-    height: 10rem;
-    left: 7rem;
     position: relative;
-    width: 10rem;
-}
-.drops {
-    height: 15rem;
-    max-width: 7rem;
-    position: relative;
-    top: 10rem;
-}
-
-/* Glitters */
-.glitters-1 {
-    height: 2rem;
-    left: 8rem;
-    position: relative;
-    top: 22rem;
-}
-.glitters-2 {
-    height: 2rem;
-    position: relative;
-    right: 5rem;
-    top: 18rem;
-    width: 2rem;
-}
-.glitters-3 {
-    height: 2rem;
-    left: 6rem;
-    position: relative;
-    top: 8rem;
-    width: 2rem;
-}
-.glitters-4 {
-    height: 2rem;
-    position: relative;
-    top: 15rem;
-    width: 2rem;
-}
-
-/* Flower */
-.div-flower {
-    border-bottom: 2px solid black;
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-}
-.flower {
-    width: 12rem;
 }
 
 /* Message */
-.div-message {
-    font-size: 1.6rem;
+.message {
+    font-size: 2rem;
     font-weight: bold;
-    height: 13rem;
-    margin-top: 2rem;
+    margin-top: 15rem;
     text-align: center;
     text-transform: uppercase;
 }
-.div-message p {
-    margin: 0;
-}
-.div-message img {
+.message img {
     height: 5rem;
     width: 5rem;
+}
+
+/* Flower */
+.flower {
+    bottom: 0;
+    position: absolute;
+}
+#flower {
+    width: 14rem;
+}
+#flower:hover {
+    cursor: pointer;
+}
+
+/* Container */
+.container-1, .container-2 {
+    bottom: 0;
+    position: absolute;
+}
+
+/* Watering Can */
+#watering-can {
+    animation: rotate 1s ease-in-out forwards;
+    bottom: 20rem;
+    left: 7rem;
+    position: relative;
+    transition: opacity 1s ease-in-out;
+    width: 12rem;
+}
+
+/* Drops */
+#drops {
+    bottom: 3rem;
+    height: 18rem;
+    left: 2rem;
+    position: relative;
+    width: 7rem;
+}
+
+/* Glitters */
+.glitters {
+    height: 3rem;
+    position: relative;
+}
+#glitter-0 {
+    bottom: 22rem;
+    left: 8rem;
+}
+#glitter-1 {
+    bottom: 8rem;
+    right: 5rem;
+}
+#glitter-2 {
+    bottom: 7rem;
+    left: 6rem;
+}
+#glitter-3 {
+    bottom: 13rem;
+    right: 2rem;
 }
 
 /* Water Button */
@@ -167,11 +167,10 @@ img {
     border: 2px solid black;
 }
 
-/* Site Footer */
+/* --- Site Footer --- */
 
 .site-footer {
-    position: absolute;
-    bottom: 0;
+    height: 10vh;
 }
 
 /* New */
